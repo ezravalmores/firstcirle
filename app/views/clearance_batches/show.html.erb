@@ -1,0 +1,61 @@
+<div class="clearance-box">
+  <table cellpadding="0" cellspacing="0">
+    <tr class="top">
+      <td colspan="4">
+        <table>
+          <tr>
+            <td class="title">
+              First Circle Inventory
+            </td>
+
+            <td>
+              Clearance Batch id #: <b><%= @clearance_batch.id %></b>
+              <br>
+              Created: <b><%= @clearance_batch.created_at.strftime('%d/%m/%Y') %></b>
+              <br>
+              Status: Processed</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="heading">
+      <td>Item</td>
+      <td class="right">Price Sold</td>
+      <td class="right">Sold At</td>
+      <td class="right"></td>
+    </tr>
+
+    <% @clearance_batch.items.each do |item| %>
+      <tr class="item">
+        <td>
+          <%= item.style.name %><br>
+          <small><%= item.style.type %></small>
+        </td>
+
+        <td class="right">
+          <%= number_to_currency(item.price_sold) %>
+        </td>
+
+        <td class="right">
+          <%= item.sold_at.strftime('%d/%m/%Y') %>
+        </td>
+
+        <td></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td colspan="4"></td>
+    </tr>
+
+    <tr class="heading">
+      <td colspan="2"></td>
+      <td><b>TOTAL:</b></td>
+      <td>
+         <b><%= number_to_currency(@clearance_batch.total_price_sold) %></b>
+      </td>
+    </tr>
+  </table>
+</div>
