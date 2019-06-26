@@ -22,6 +22,11 @@ class ClearanceBatchesController < ApplicationController
   end
 
   def create
+    if params[:csv_batch_file].nil?
+      flash[:alert] = "Select a csv file to process first!"
+      return redirect_to action: :index
+    end
+
     batch_service = ClearanceItemsFromCsvService.new(params[:csv_batch_file].tempfile)
     batch_service.process!
 

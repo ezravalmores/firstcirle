@@ -20,7 +20,7 @@ class ItemClearanceProcessor
     item.price_sold = discounted_price 
     item.sold_at = Time.now
 
-    # Set batch id if Clearanced from batch service
+    # Set batch id if clearance batch process id was passed
     item.clearance_batch_id = @batch_id if @batch_id.present?
 
     item.save!
