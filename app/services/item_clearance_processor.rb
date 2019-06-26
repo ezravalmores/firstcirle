@@ -17,7 +17,10 @@ class ItemClearanceProcessor
 
   def clearance_and_save!
     item.set_status_to_clearanced
-    item.price_sold = discounted_price 
+    item.price_sold = discount.last_discounted_price
+    item.discounted_price = discount.discounted_price
+    item.last_discounted_price = discount.last_discounted_price
+    item.discount_limit_given = discount.discount_limit_given?
     item.sold_at = Time.now
 
     # Set batch id if clearance batch process id was passed
@@ -26,7 +29,7 @@ class ItemClearanceProcessor
     item.save!
   end
 
-  def discounted_price 
-    ClearanceDiscountedPriceGenerator.new(item).generate_discount
+  def discount
+    @discount ||= ClearanceDiscountedPriceGenerator.new(item)
   end
 end

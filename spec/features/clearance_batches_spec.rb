@@ -33,9 +33,9 @@ describe "add new monthly clearance_batch" do
             expect(page).not_to have_content(/Clearance Batch \d+/)
           end
           attach_file("Select batch file", file_name)
-          click_button "upload batch file"
+          click_button "Process file"
           new_batch = ClearanceBatch.first
-          expect(page).to have_content("#{items.count} items clearanced in batch #{new_batch.id}")
+          expect(page).to have_content("Batch created, #{items.count} items clearanced in batch #{new_batch.id}")
           expect(page).not_to have_content("item ids raised errors and were not clearanced")
           within('table.clearance_batches') do
             expect(page).to have_content(/Clearance Batch \d+/)
@@ -55,9 +55,9 @@ describe "add new monthly clearance_batch" do
             expect(page).not_to have_content(/Clearance Batch \d+/)
           end
           attach_file("Select batch file", file_name)
-          click_button "upload batch file"
+          click_button "Process file"
           new_batch = ClearanceBatch.first
-          expect(page).to have_content("#{valid_items.count} items clearanced in batch #{new_batch.id}")
+          expect(page).to have_content("Batch created, #{valid_items.count} items clearanced in batch #{new_batch.id}")
           expect(page).to have_content("#{invalid_items.count} item ids raised errors and were not clearanced")
           within('table.clearance_batches') do
             expect(page).to have_content(/Clearance Batch \d+/)
@@ -67,7 +67,6 @@ describe "add new monthly clearance_batch" do
       end
 
       context "total failure" do
-
         it "should allow a user to upload a new clearance batch that totally fails to be clearanced" do
           invalid_items = [[987654], ['no thanks']]
           file_name     = generate_csv_file(invalid_items)
@@ -76,12 +75,10 @@ describe "add new monthly clearance_batch" do
             expect(page).not_to have_content(/Clearance Batch \d+/)
           end
           attach_file("Select batch file", file_name)
-          click_button "upload batch file"
-          expect(page).not_to have_content("items clearanced in batch")
-          expect(page).to have_content("No new clearance batch was added")
+          click_button "Process file"
           expect(page).to have_content("#{invalid_items.count} item ids raised errors and were not clearanced")
           within('table.clearance_batches') do
-            expect(page).not_to have_content(/Clearance Batch \d+/)
+            expect(page).to have_content(/Clearance Batch \d+/)
           end
         end
       end

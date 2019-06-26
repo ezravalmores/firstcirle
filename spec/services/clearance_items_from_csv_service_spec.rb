@@ -12,7 +12,9 @@ describe ClearanceItemsFromCsvService do
 
       before do
         allow(ClearanceDiscountedPriceGenerator).to receive(:new).and_return(discounted_price_generator)
-        allow(discounted_price_generator).to receive(:generate_discount).and_return(10)
+        allow(discounted_price_generator).to receive(:last_discounted_price).and_return(10)
+        allow(discounted_price_generator).to receive(:discounted_price).and_return(10)
+        allow(discounted_price_generator).to receive(:discount_limit_given?).and_return(false)
 
         @batch_service = ClearanceItemsFromCsvService.new(uploaded_file)
         @batch_service.process!
@@ -60,7 +62,9 @@ describe ClearanceItemsFromCsvService do
 
       before do
         allow(ClearanceDiscountedPriceGenerator).to receive(:new).and_return(discounted_price_generator)
-        allow(discounted_price_generator).to receive(:generate_discount).and_return(10)
+        allow(discounted_price_generator).to receive(:last_discounted_price).and_return(10)
+        allow(discounted_price_generator).to receive(:discounted_price).and_return(10)
+        allow(discounted_price_generator).to receive(:discount_limit_given?).and_return(false)
 
         @batch_service = ClearanceItemsFromCsvService.new(uploaded_file)
         @batch_service.process!

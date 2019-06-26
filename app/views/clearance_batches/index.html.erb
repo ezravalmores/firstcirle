@@ -1,8 +1,13 @@
+<h3>Clearance Batches</h3>
+
+</br>
+
 <%= form_tag(clearance_batches_path, multipart: true, class: 'form-inline', role: 'form') do %>
   <div class="form-group">
+    <%= label_tag 'csv_batch_file', 'Select batch file' %>
     <%= file_field_tag 'csv_batch_file', class: 'form-control' %>
   </div>
-  <%= button_tag 'proccess', class: 'btn btn-primary' %>
+  <%= button_tag 'Process file', class: 'btn btn-primary' %>
 <% end %>
 
 </br>
@@ -10,6 +15,7 @@
 <table class="table table-bordered clearance_batches">
   <thead>
     <tr>
+      <th></th>
       <th></th>
       <th>Date clearanced</th>
       <th>Number of items clearanced</th>
@@ -20,9 +26,9 @@
     <%- @clearance_batches.each do |clearance_batch| -%>
       <tr>
         <td>Clearance Batch <%= clearance_batch.id %></td>
-        <td><%= l(clearance_batch.created_at, format: :short) %></td>
+        <td><%= clearance_batch.created_at.strftime('%d/%m/%Y') %></td>
         <td><%= clearance_batch.items.count %></td>
-        <td><%= link_to 'Download Report', clearance_batch_path(clearance_batch, format: :pdf) %></td>
+        <td><%= link_to 'View Report', clearance_batch_path(clearance_batch, format: :pdf) %></td>
       </tr>
     <%- end -%>
   </tbody>

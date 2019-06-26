@@ -33,12 +33,13 @@ class ClearanceBatchesController < ApplicationController
     errors = []
 
     if batch_service.batch.persisted?
-      flash[:notice] = "Batch successfully created!"
+      flash[:notice]  = "Batch created, #{batch_service.items_clearanced_count} items clearanced in batch #{batch_service.batch.id}"
     else
       flash[:alert] = "Batch was not created and no item were clearanced!"
     end
 
     if batch_service.errors.any?
+      errors << "#{batch_service.errors.count} item ids raised errors and were not clearanced"
       batch_service.errors.flatten.each {|error| errors << error }
     end
 

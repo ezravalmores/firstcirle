@@ -1,7 +1,6 @@
 FactoryGirl.define do
 
   factory :clearance_batch do
-
   end
 
   factory :item do
@@ -12,6 +11,7 @@ FactoryGirl.define do
   end
 
   factory :style do
+    type 'Pants'
     wholesale_price 55
   end
 end
